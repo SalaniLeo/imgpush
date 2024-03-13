@@ -160,10 +160,97 @@ def _resize_image(path, width, height):
 @app.route("/", methods=["GET"])
 def root():
     return """
-<form action="/" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" id="file">
-    <input type="submit" value="Upload" name="submit">
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uploader</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+    <style>
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 125px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        input[type="file"]::file-selector-button {
+            background-color: #b0853f;
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 12px;
+            width: 125px;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background-color: #b79051;
+        }
+        #form{
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 0fr 1fr 0fr; 
+            grid-column-gap: 0px;
+            grid-row-gap: 0px; 
+        }
+        img {
+            margin: 16px;
+            max-height: 500px;
+            aspect-ratio: auto;
+        }
+        a {
+            color: #cbb89a;
+        }
+    </style>
+    <body">
+        <form action="/" method="post" enctype="multipart/form-data" id="form">
+            <input type="file" name="file" onchange="loadFile(event)">
+            <img id="output"/>
+            <input type="submit" value="Upload" name="submit">
+        </form>
+    </body>
+    <footer>
+        <p>Fork of <a href="https://github.com/hauxir/imgpush">imgpush</a> by <a href="https://github.com/SalaniLeo">SalaniLeo</a></p>
+    </footer>
+    <script>
+        var loadFile = function(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+            var output = document.getElementById('output');
+            output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+    </script>
+</html>
+"""
+
+
+@app.route("/images", methods=["GET"])
+def list_images():
+    image_files = [f for f in os.listdir(settings.IMAGES_DIR) if os.path.isfile(os.path.join(settings.IMAGES_DIR, f))]
+    images_html = "<ul>" + "".join(f"<li>{filename}</li>" for filename in image_files) + "</ul>"
+    return f"""
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Images List</title>
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body">
+        <h2>List of Images</h2>
+        {images_html}
+    </body>
+    <footer>
+        <p>Fork of <a href="https://github.com/hauxir/imgpush">imgpush</a> by <a href="https://github.com/SalaniLeo">SalaniLeo</a></p>
+    </footer>
+</html>
 """
 
 
