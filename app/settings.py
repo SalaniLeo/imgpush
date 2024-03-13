@@ -11,11 +11,11 @@ NAME_STRATEGY = "randomstr"
 MAX_TMP_FILE_AGE = 5 * 60
 RESIZE_TIMEOUT = 5
 NUDE_FILTER_MAX_THRESHOLD = None
-ALLOW_VIDEO = False
+ALLOW_VIDEO = True
 
 VALID_SIZES = []
 
-MAX_SIZE_MB = 16
+MAX_SIZE_MB = 64
 
 for variable in [item for item in globals() if not item.startswith("__")]:
     NULL = "NULL"
