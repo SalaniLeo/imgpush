@@ -4,4 +4,4 @@ Minimalist Self-hosted Image Service for user submitted images in your app (e.g.
 ## Fork of Imgpush.
 - Modified style of web page
 - added /images
-### Everything remains else remains the same. Check out [the original readme](https://github.com/hauxir/imgpush) for anything. 
+### Everything else remains the same. Check out [the original readme](https://github.com/hauxir/imgpush) for anything. 
